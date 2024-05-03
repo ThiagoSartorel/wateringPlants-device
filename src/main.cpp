@@ -5,10 +5,11 @@ int MAX = 2971;// MAX 2971  0 % MOLHADO
 int MIN = 1000;// MIN 1000 100% MOLHADO
 
 //PINOS
-int SENSOR = 35;
-int RED = 5; 
-int YELLOW = 18; 
-int GREEN = 19; 
+#define SENSOR 35
+#define RED 5
+#define YELLOW 18
+#define GREEN 19
+#define LED_PIN 2
 
 
 void setup() {
@@ -17,15 +18,17 @@ void setup() {
   pinMode(RED, OUTPUT);
   pinMode(YELLOW, OUTPUT);
   pinMode(GREEN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 }
 
 void loop() {
   int leitura = analogRead(SENSOR);
   int percentage = map(leitura, MIN, MAX, 100, 0);
   Serial.println(percentage);
-  delay(1000);
-
-  if (percentage < 60) {
+  digitalWrite(LED_PIN, HIGH);
+  delay(50);
+  digitalWrite(LED_PIN, LOW);
+    if (percentage < 60) {
     Serial.println("RED");
     digitalWrite(RED, HIGH);
     digitalWrite(YELLOW, LOW);
@@ -41,9 +44,6 @@ void loop() {
     digitalWrite(YELLOW, LOW);
     digitalWrite(GREEN, HIGH);
   }
-
+  delay(5*60*1000);
 }
-
-// Umidade base para irrigar 75%
-// < 75% RED | > 75% < 85% YELLOW | > 85% GREEN
 
